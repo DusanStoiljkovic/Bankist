@@ -8,6 +8,9 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
+const navLinks = document.querySelectorAll('.nav__link');
+const navLogo = document.querySelector('.nav__logo');
+
 const openModal = function () {
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
@@ -29,3 +32,30 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+// NAVIGATION
+navLinks.forEach(link =>
+  link.addEventListener('mouseenter', e => {
+    e.preventDefault();
+
+    navLinks.forEach(link => {
+      if (link !== e.target) {
+        link.style.opacity = '0.5';
+      }
+      navLogo.style.opacity = '0.5';
+    });
+  }),
+);
+
+navLinks.forEach(link =>
+  link.addEventListener('mouseleave', e => {
+    e.preventDefault();
+
+    navLinks.forEach(link => {
+      if (link !== e.target) {
+        link.style.opacity = '1';
+      }
+      navLogo.style.opacity = '1';
+    });
+  }),
+);
