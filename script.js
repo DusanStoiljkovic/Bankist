@@ -154,3 +154,39 @@ lazyImages.forEach(img => {
   imgObserver.observe(img);
   img.classList.add('lazy-img');
 });
+
+// Slider component
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
+let currentSlide = 0;
+const maxSlideLength = slides.length;
+
+for (let i = 0; i < maxSlideLength; i++) {
+  const dotChild = document.createElement('div');
+  dotChild.classList.add('dots__dot');
+  dotChild.dataset.slide = i;
+  dotContainer.appendChild(dotChild);
+  console.log('Ubacen ' + i + '. element');
+}
+const dots = document.querySelectorAll('.dots__dot');
+
+const goToSlide = function (slideIndex) {
+  if (slideIndex < 0 || slideIndex >= maxSlideLength) return;
+  slides.forEach((slide, i) => {
+    slide.style.transform = `translateX(${100 * (i - slideIndex)}%)`;
+    currentSlide = slideIndex;
+  });
+
+  dots.forEach(dot => dot.classList.remove('dots__dot--active'));
+  dots[slideIndex].classList.add('dots__dot--active');
+};
+
+btnLeft.addEventListener('click', () => goToSlide(currentSlide - 1));
+btnRight.addEventListener('click', () => goToSlide(currentSlide + 1));
+dots.forEach(dot =>
+  dot.addEventListener('click', () => goToSlide(dot.dataset.slide)),
+);
+
+goToSlide(currentSlide);
